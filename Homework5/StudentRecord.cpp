@@ -1,0 +1,60 @@
+#include "StudentRecord.h"
+
+
+StudentRecord::StudentRecord(){}
+std::string StudentRecord::classname() const { return classname_; }
+std::string StudentRecord::firstname() const { return firstname_; }
+std::string StudentRecord::lastname() const { return lastname_; }
+ 
+double StudentRecord::score() const { return score_; }
+bool StudentRecord::operator>( StudentRecord const & right ) const {
+ return this->score() > right.score();
+};
+bool StudentRecord::operator>=( StudentRecord const & right ) const {
+ return this->score() >= right.score();
+};
+bool StudentRecord::operator<( StudentRecord const & right ) const {
+ return this->score() < right.score();
+};
+bool StudentRecord::operator<=( StudentRecord const & right ) const {
+ return this->score() <= right.score();
+};
+
+void StudentRecord::compute_score(void) {
+ if ( scores_.size() == 0 ) {
+ return ;
+ }
+ score_ = 0.0;
+ for ( unsigned int i = 0; i < scores_.size(); ++i ) {
+ double iscore = scores_[i];
+ score_ += iscore;
+ }
+ score_ /= scores_.size(); 
+
+}
+
+// lit here actually is history
+void StudentRecord::total_his(void) {
+
+if (scores_.size() == 0 ){
+  return ;
+}
+double a,b,c,d,e;
+double smallest = 99999999;
+score_ = 0.0;
+for (unsigned int i = 0; i < scores_.size(); i++)
+  a = scores_[i];
+if (a < smallest){
+  smallest = a;
+  d = (0.4 * smallest);
+ }
+for (unsigned int i = 0; i < scores_.size(); i++)
+  a = scores_[i];
+if (a > b){
+  b = a;
+  e = (0.6 * b);
+ }
+  score_ = (d + e);
+}
+
+

@@ -6,18 +6,15 @@ StudentRecordHistory::~StudentRecordHistory() {};
 
 void StudentRecordHistory::print( std::ostream & out ) const {
  std::cout << "History score : " << lastname_ << "," << firstname_
- << ", score 0: " << scores_[0] << ", score 1: " << scores_[1]
- << ", total: " << score() << endl;
+ << ", Exam 1: " << scores_[0] << ", Exam 2: " << scores_[1]
+	   << ", total: " << score() << std::endl;
 }
 
 bool StudentRecordHistory::input( std::istream & in ) {
 
- // First add name (last,first)
+
 
  std::string line;
-
- // getline( in, line, ',');
- // classname_ = line;
 
  getline( in, line, ',');
  lastname_ = line;

@@ -4,22 +4,21 @@ StudentRecordPhysics::~StudentRecordPhysics() {};
 
 void StudentRecordPhysics::print( std::ostream & out  ) const  {
   std::cout << "Physics score: " << lastname_ << "," << firstname_
-      << ", score 0: " << scores_[0] << ", score 1: " << scores_[1]
+      << ", Homework: " << scores_[0] << ", Lab: " << scores_[1]
       << ", total: " << score() << std::endl;
 }
 
-bool StudentRecordPhysics::input( std::istream & in )  {
-  // Class name
-  std:string line;
-  // std::getline(in, line, ',');
-  // classname_ = line;
+bool StudentRecordPhysics::input( std::istream & in ) {
 
-  // First add name (last,first)
-  std::getline( in, line, ',');
-  lastname_ = line;
 
-  std::getline( in, line, ',');
-  firstname_ = line;
+
+ std::string line;
+
+ getline( in, line, ',');
+ lastname_ = line;
+
+ getline( in, line, ',');
+ firstname_ = line;
 
   // Now get each score. Physics has two
   std::getline( in, line, ',' );
@@ -31,7 +30,7 @@ bool StudentRecordPhysics::input( std::istream & in )  {
   if ( line == "") 
     return false;
   else {      
-    StudentRecord::total_phy();                     // Make sure to call compute_score in input!
+     total_phy();         // Make sure to call compute_score in input!
     return true;
   }
 }

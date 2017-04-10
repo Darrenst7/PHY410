@@ -63,14 +63,21 @@ int main()
     data_file.close();
     cout << " stored " << events << " events in histogram" << endl;
 
+    
     // some bins might have no events - log(N=0) = -infinity
-    vector<double> M_values, log10N_values;
+    vector<double> John, Wynston;
     for (int i = 0; i < bins; i++) {
         if (N[i] > 0) {
-            M_values.push_back(M[i]);
-            log10N_values.push_back(log10(N[i]));
-        }
+            Wynston.push_back(log10(N[i]));
+            John.push_back(M[i]);}
+}
+    std::vector<double> M_values, log10N_values;
+    for ( unsigned int i = 0 ; i < John.size() ; ++i ) {
+        if ( John[i] > 3.0 ) {
+            M_values.push_back(John[i]);
+            log10N_values.push_back(Wynston[i]);}
     }
+    
 
     // write histogram to file for plotting
     ofstream histogram_file("histogram.dat");

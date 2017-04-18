@@ -1,8 +1,10 @@
 import matplotlib.pyplot as plt
 
 from fft import fft
+from fft import ifft
 from fft import fft_power
 from numpy import array
+from numpy import real
 import math
 import time
 import numpy
@@ -62,7 +64,7 @@ else :
     file.close()
     print ' read', len(lines), 'lines from', data_file_name
 
-    window = False
+    window = True
 
     yinput = []  #data === interpolated/avg/trend
     xinput = []  #dates
@@ -74,7 +76,7 @@ else :
                 if year > 1957 and year < 2018:
                     words = line.split()
                     xval = float(words[2])  # dates
-                    yval = float( words[5] )# data 3=avg, 4=inter, 5=trend
+                    yval = float( words[4] )# data 3=avg, 4=inter, 5=trend
                     yinput.append( yval )
                     xinput.append( xval )
             except ValueError :
@@ -115,28 +117,44 @@ if log2N - int(log2N) > 0.0 :
     Y = fft(y)
 #    y2 = array( yinput2 ) 
 #    x2 = array( xinput )
-    y3 = array( yinput3 )
-    x3 = array( xinput3 )
+
+    maxfreq = 200  
+    # Now smooth the data
+    for iY in range(maxfreq, len(Y)-maxfreq ) :
+        Y[iY] = complex(0,0)
+
+        Y[iY] = Y[iY] * (0.5 - 0.5 * math.cos(2*math.pi*iY/float(N-1)))
+
+        ysmoothed = ifft(Y)
+        ysmoothedreal = real(ysmoothed)
+
+
+  #  y3 = array( yinput3 )
+   # x3 = array( xinput3 )
 
     powery = fft_power(Y)
     powerx = array([ float(i) for i in xrange(len(powery)) ] )
 
     Yre = [math.sqrt(Y[i].real**2+Y[i].imag**2) for i in xrange(len(Y))]
 
-coefficents= numpy.polyfit(x3,y3,2)
-polynomial= numpy.poly1d(coefficents)
-print polynomial
+#coefficents= numpy.polyfit(x3,y3,2)
+#polynomial= numpy.poly1d(coefficents)
+#print polynomial
 
-#    plt.subplot(2, 1, 1)
-#    plt.plot( x3, y3 )
+    ay = plt.subplot(2, 1, 1)
+    g1, = plt.plot(x, y)
+    g2, = plt.plot( x, ysmoothedreal)
+    ay.legend( [g1,g2], ['Initial Graph', 'Smoothed Graph'] )
 
-#    ax = plt.subplot(2, 1, 2)
-#    p1, = plt.plot( powerx, powery )
-#    p2, = plt.plot( x, Yre )
-#    ax.legend( [p1, p2], ["Power", "Magnitude"] )
-#    plt.yscale('log')
+ #   plt.plot( x, y )
+
+    ax = plt.subplot(2, 1, 2)
+    p1, = plt.plot( powerx, powery )
+    p2, = plt.plot( x, Yre )
+    ax.legend( [p1, p2], ["Power", "Magnitude"] )
+    plt.yscale('log')
 
 
-#    plt.show()
+    plt.show()
 
 

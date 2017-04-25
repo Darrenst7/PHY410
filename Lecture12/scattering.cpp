@@ -206,9 +206,9 @@ int main()
 
   using namespace std;
   cout << " Classical Scattering from Lennard-Jones potential" << endl;
-  double E = 0.705;      // set global value of E
+  double E = 77;      // set global value of E
   cout << " Energy E = " << E << endl;
-  double b_min = 0.6, db = 0.3;
+  double b_min = 1.7, db = .3;
   int n_b = 6;
   double b = 0.0;
   double V0 = 1.0;
